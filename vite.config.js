@@ -34,7 +34,8 @@ export default defineConfig({
     vue(),
     globals,
     legacy({
-      targets: ["defaults", "not IE 11"]
+      targets: ['ie >= 11'],
+      additionalLegacyPolyfills: ['regenerator-runtime/runtime']
     })
   ],
   server: {

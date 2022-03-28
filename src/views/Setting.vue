@@ -13,7 +13,7 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
-const version = ref("2022.3.28.1");
+const version = ref("2022.3.28.3");
 const clearCache = () => {
   Dialog.confirm({
     message: "确认删除所有缓存数据吗"
@@ -31,6 +31,7 @@ const handleBack = () => {
 :deep(.van-cell__right-icon),
 :deep(.van-cell__value) {
   color: #fff !important;
+  display: flex;
 }
 :deep(.van-cell) {
   background: rgba(255, 255, 255, 0) !important;
