@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import PluginImportToCDN from "vite-plugin-cdn-import";
+import legacy from "@vitejs/plugin-legacy";
 
 // 全局对象
 const globals = PluginImportToCDN({
@@ -29,7 +30,13 @@ const globals = PluginImportToCDN({
   ]
 });
 export default defineConfig({
-  plugins: [vue(), globals],
+  plugins: [
+    vue(),
+    globals,
+    legacy({
+      targets: ["defaults", "not IE 11"]
+    })
+  ],
   server: {
     port: 8008
   },
