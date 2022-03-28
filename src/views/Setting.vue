@@ -13,7 +13,7 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
-const version = ref("2022.2.23.02");
+const version = ref("2022.3.28.1");
 const clearCache = () => {
   Dialog.confirm({
     message: "确认删除所有缓存数据吗"

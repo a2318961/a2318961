@@ -7,7 +7,7 @@
     </div>
     <van-tabbar v-model="active" v-if="isShow" active-color="#53e3a6">
       <van-tabbar-item name="/" replace to="/" icon="home-o"
-        >站台1</van-tabbar-item
+        >站台</van-tabbar-item
       >
       <van-tabbar-item
         name="/lineSearch"
