@@ -72,7 +72,7 @@ const handleChange = debounce(value => {
     searchList.value = [];
     return;
   }
-  searchStopList(value).then(res => {
+  searchStopList(encodeURI(encodeURI(value))).then(res => {
     const { stops = [] } = res.data.data;
     searchList.value = stops;
   });
