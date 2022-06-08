@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseUrl = "http://bus.wuhancloud.cn:9087/website//web/420100";
+const baseUrl = "http://real-time-bus.whgjzt.com:9087/website//web/420100";
 //线路详情
 export const getLineLineDetail = lineId => {
   return axios.get(`${baseUrl}/line/${lineId}.do?Type=LineDetail`);
