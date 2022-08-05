@@ -32,7 +32,7 @@ const globals = PluginImportToCDN({
 export default defineConfig({
   plugins: [
     vue(),
-    globals,
+    // globals,
     legacy({
       targets: ["ie >= 11"],
       additionalLegacyPolyfills: ["regenerator-runtime/runtime"]
