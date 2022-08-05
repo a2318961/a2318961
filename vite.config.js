@@ -19,8 +19,8 @@ const globals = PluginImportToCDN({
     {
       name: "vant",
       var: "vant",
-      path: "https://unpkg.com/vant@3/lib/vant.min.js",
-      css: "https://unpkg.com/vant@3/lib/index.css"
+      path: "https://unpkg.com/vant@3.4.6/lib/vant.min.js",
+      css: "https://unpkg.com/vant@3.4.6/lib/index.css"
     },
     {
       name: "axios",
