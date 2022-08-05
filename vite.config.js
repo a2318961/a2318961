@@ -34,12 +34,15 @@ export default defineConfig({
     vue(),
     globals,
     legacy({
-      targets: ['ie >= 11'],
-      additionalLegacyPolyfills: ['regenerator-runtime/runtime']
+      targets: ["ie >= 11"],
+      additionalLegacyPolyfills: ["regenerator-runtime/runtime"]
     })
   ],
   server: {
     port: 8008
+  },
+  define: {
+    "process.env": {}
   },
   base: "./",
   build: {
