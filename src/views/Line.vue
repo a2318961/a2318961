@@ -22,20 +22,28 @@
       <div>{{ title }}</div>
     </div>
     <van-pull-refresh v-model="isSpin" @refresh="onRefresh">
-      <div class="line-scroll">
-        <div
-          class="line-item"
-          :class="{ arrive: item.flag }"
-          v-for="(item, index) in stopList"
-          :key="index"
-        >
-          <div class="bus-icon" v-if="item.show">
-            <van-icon name="logistics" size="20" />
+      <van-tabs>
+        <van-tab title="线路图">
+          <div class="line-scroll">
+            <div
+              class="line-item"
+              :class="{ arrive: item.flag }"
+              v-for="(item, index) in stopList"
+              :key="index"
+            >
+              <div class="bus-icon" v-if="item.show">
+                <van-icon name="logistics" size="20" />
+              </div>
+              {{ index + 1 }}
+              {{ item.stopName }}
+            </div>
           </div>
-          {{ index + 1 }}
-          {{ item.stopName }}
-        </div>
-      </div>
+        </van-tab>
+        <van-tab title="地图">
+          <BusMap v-if="!isSpin" :lineData="lineData" />
+        </van-tab>
+      </van-tabs>
+
       <div
         v-if="updateTime"
         style="font-size: 12px; text-align: center; padding: 15px 0"
@@ -46,12 +54,13 @@
   </div>
 </template>
 <script setup>
-import { Toast } from "vant";
+import { Toast, Tab, Tabs } from "vant";
 import { ref, watch } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { getLineLineDetail } from "../js/api";
 import { formatDate } from "../js/utils";
 import LineStar from "./LineStar.vue";
+import BusMap from "./BusMap.vue";
 
 const props = defineProps({
   isComponent: {
@@ -72,6 +81,7 @@ const stopList = ref([]);
 const title = ref("");
 const tips = ref("");
 const isSpin = ref(false);
+const lineData = ref({});
 console.log("isComponent", props.isComponent);
 const id = ref("");
 const lineNo = ref("");
@@ -91,6 +101,7 @@ const getData = (lineId, showMessage = false) => {
         lastTime,
         lineName
       } = res.data.data;
+      lineData.value = res.data.data;
       title.value = `线路${lineName} ${startStopName} -> ${endStopName}`;
       lineNo.value = lineName;
       lineDirection.value = `${startStopName} -> ${endStopName}`;
@@ -141,7 +152,7 @@ watch(
   { immediate: true }
 );
 </script>
-<style lang="less" scoped>
+<style lang="less">
 .line-wrap {
   padding: 20px;
 }
@@ -210,6 +221,14 @@ watch(
       top: -3px;
       left: 0px;
     }
+  }
+}
+
+.van-tabs__nav {
+  background: rgba(255, 255, 255, 0) !important;
+  .van-tab {
+    color: #fff !important;
+    font-size: 16px;
   }
 }
 </style>
