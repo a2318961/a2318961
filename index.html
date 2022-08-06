@@ -10,11 +10,13 @@
     <div id="app"></div>
     <script type="module" src="/src/main.js"></script>
   </body>
-  <link rel="stylesheet" href="https://unpkg.com/vant@3/lib/index.css" />
-  <!-- <script src="https://unpkg.com/vue@3"></script>
-  <script src="https://unpkg.com/vue-router@4"></script>
-  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-  <script src="https://unpkg.com/vant@3/lib/vant.min.js"></script> -->
+  <!-- <link rel="stylesheet" href="https://unpkg.com/vant@3/lib/index.css" /> -->
+  
+  <script src="https://unpkg.com/vconsole@latest/dist/vconsole.min.js"></script>
+  <script>
+    // VConsole 默认会挂载到 `window.VConsole` 上
+    var vConsole = new window.VConsole();
+  </script>
   <script
     type="text/javascript"
     src="https://webapi.amap.com/maps?v=2.0&key=43be58d85d4cc326b9c7e7b85ddda11e&plugin=AMap.LineSearch"

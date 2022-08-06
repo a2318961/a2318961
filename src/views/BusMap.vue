@@ -44,12 +44,12 @@ function initMap() {
         lineSearch_Callback(result);
         console.log("result", result);
       } else {
-        alert(result);
       }
     });
   }
   /*公交路线查询服务返回数据解析概况*/
   function lineSearch_Callback(data) {
+    console.log('lineSearch_Callback',data);
     var lineArr = data.lineInfo;
     var lineNum = data.lineInfo.length;
     if (lineNum == 0) {
@@ -58,8 +58,8 @@ function initMap() {
         var pathArr = lineArr[i].path;
         var stops = lineArr[i].via_stops;
         console.log("stops", stops);
-        var startPot = stops[0].location;
-        var endPot = stops[stops.length - 1].location;
+        // var startPot = stops[0].location;
+        // var endPot = stops[stops.length - 1].location;
         if (i == 0)
           //作为示例，只绘制一条线路
           drawbusLine(stops, pathArr);
@@ -99,7 +99,7 @@ function initMap() {
     var busPolyline = new AMap.Polyline({
       map: map,
       path: BusArr,
-      strokeColor: "#07c160", //线颜色
+      strokeColor: "#09f", //线颜色
       strokeOpacity: 0.8, //线透明度
       isOutline: false,
       outlineColor: "white",
@@ -107,16 +107,17 @@ function initMap() {
     });
     // 将 busPolyline 显示在地图中心并自动缩放地图到合适级别。
     // true表示需要动画过程，[60,200,60,60]表示上下左右避让像素
-    map.setFitView(busPolyline, true, [30, 30, 30, 30]);
+    map.setFitView(busPolyline, true, [10, 10, 10, 10]);
   }
   lineSearch();
 }
 </script>
 <style lang="less" scoped>
 #bus-map {
-  width: calc(100% + 40px);
-  height: 50vh;
-  margin-left: -20px;
+  // width: calc(100% + 40px);
+  height: 60vh;
+  // margin-left: -20px;
+  margin-top: 20px;
 }
 /deep/.stops-dot {
   display: inline-block;

@@ -21,41 +21,41 @@
     <div style="font-size: 13px; margin-bottom: 20px">
       <div>{{ title }}</div>
     </div>
-    <van-pull-refresh v-model="isSpin" @refresh="onRefresh">
-      <van-tabs>
-        <van-tab title="线路图">
-          <div class="line-scroll">
-            <div
-              class="line-item"
-              :class="{ arrive: item.flag }"
-              v-for="(item, index) in stopList"
-              :key="index"
-            >
-              <div class="bus-icon" v-if="item.show">
-                <van-icon name="logistics" size="20" />
-              </div>
-              {{ index + 1 }}
-              {{ item.stopName }}
+    <!-- <van-pull-refresh v-model="isSpin" @refresh="onRefresh"> -->
+    <van-tabs>
+      <van-tab title="线路图">
+        <div class="line-scroll">
+          <div
+            class="line-item"
+            :class="{ arrive: item.flag }"
+            v-for="(item, index) in stopList"
+            :key="index"
+          >
+            <div class="bus-icon" v-if="item.show">
+              <van-icon name="logistics" size="20" />
             </div>
+            {{ index + 1 }}
+            {{ item.stopName }}
           </div>
-        </van-tab>
-        <van-tab title="地图">
-          <BusMap v-if="!isSpin" :lineData="lineData" />
-        </van-tab>
-      </van-tabs>
+        </div>
+      </van-tab>
+      <van-tab title="地图">
+        <BusMap v-if="!isSpin" :lineData="lineData" />
+      </van-tab>
+    </van-tabs>
 
-      <div
-        v-if="updateTime"
-        style="font-size: 12px; text-align: center; padding: 15px 0"
-      >
-        更新时间：{{ updateTime }}
-      </div>
-    </van-pull-refresh>
+    <div
+      v-if="updateTime"
+      style="font-size: 12px; text-align: center; padding: 15px 0"
+    >
+      更新时间：{{ updateTime }}
+    </div>
+    <!-- </van-pull-refresh> -->
   </div>
 </template>
 <script setup>
-import { Toast, Tab, Tabs } from "vant";
-import { ref, watch } from "vue";
+import { Toast } from "vant";
+import { ref, watch, onMounted, onUnmounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { getLineLineDetail } from "../js/api";
 import { formatDate } from "../js/utils";
@@ -75,6 +75,7 @@ const props = defineProps({
 
 const emit = defineEmits(["getStatus"]);
 
+let timer = null;
 const route = useRoute();
 const router = useRouter();
 const stopList = ref([]);
@@ -151,6 +152,14 @@ watch(
   },
   { immediate: true }
 );
+onMounted(() => {
+  timer = setInterval(() => {
+    getData(id.value, true);
+  }, 6000);
+});
+onUnmounted(() => {
+  clearInterval(timer);
+});
 </script>
 <style lang="less">
 .line-wrap {
