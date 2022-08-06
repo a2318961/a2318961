@@ -40,7 +40,7 @@
         </div>
       </van-tab>
       <van-tab title="地图">
-        <BusMap v-if="!isSpin" :lineData="lineData" />
+        <BusMap ref="map" :lineData="lineData" />
       </van-tab>
     </van-tabs>
 
@@ -103,6 +103,7 @@ const getData = (lineId, showMessage = false) => {
         lineName
       } = res.data.data;
       lineData.value = res.data.data;
+
       title.value = `线路${lineName} ${startStopName} -> ${endStopName}`;
       lineNo.value = lineName;
       lineDirection.value = `${startStopName} -> ${endStopName}`;
@@ -126,6 +127,7 @@ const getData = (lineId, showMessage = false) => {
     })
     .catch(err => {
       Toast("刷新失败");
+      console.log(err);
       isSpin.value = false;
     });
 };
@@ -153,12 +155,12 @@ watch(
   { immediate: true }
 );
 onMounted(() => {
-  timer = setInterval(() => {
-    getData(id.value, true);
-  }, 6000);
+  // timer = setInterval(() => {
+  //   getData(id.value, true);
+  // }, 6000);
 });
 onUnmounted(() => {
-  clearInterval(timer);
+  // clearInterval(timer);
 });
 </script>
 <style lang="less">

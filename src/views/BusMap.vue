@@ -2,7 +2,7 @@
   <div id="bus-map"></div>
 </template>
 <script setup>
-import { ref, watch, onMounted } from "vue";
+import { ref, watch, onMounted, nextTick } from "vue";
 
 const props = defineProps({
   lineData: {
@@ -11,17 +11,30 @@ const props = defineProps({
   }
 });
 
-onMounted(() => {
-  initMap();
-  console.log("lineData", props.lineData);
-});
-function initMap() {
-  var map = new AMap.Map("bus-map", {
-    resizeEnable: true,
-    // mapStyle: "amap://styles/blue", //设置地图的显示样式
-    center: [114.32880689118193, 30.57820691136083], //地图中心点
-    zoom: 16 //地图显示的缩放级别
-  });
+// onMounted(() => {
+//   initMap();
+//   console.log("lineData", props.lineData);
+// });
+
+watch(
+  () => props.lineData,
+  () => {
+    nextTick(() => {
+      initMap();
+    });
+  },
+  { immediate: true }
+);
+const initMap = () => {
+  var map = null;
+  if (!map) {
+    map = new AMap.Map("bus-map", {
+      resizeEnable: true,
+      // mapStyle: "amap://styles/blue", //设置地图的显示样式
+      center: [114.32880689118193, 30.57820691136083], //地图中心点
+      zoom: 16 //地图显示的缩放级别
+    });
+  }
 
   var linesearch;
   /*公交线路查询*/
@@ -49,7 +62,7 @@ function initMap() {
   }
   /*公交路线查询服务返回数据解析概况*/
   function lineSearch_Callback(data) {
-    console.log('lineSearch_Callback',data);
+    console.log("lineSearch_Callback", data);
     var lineArr = data.lineInfo;
     var lineNum = data.lineInfo.length;
     if (lineNum == 0) {
@@ -110,7 +123,7 @@ function initMap() {
     map.setFitView(busPolyline, true, [10, 10, 10, 10]);
   }
   lineSearch();
-}
+};
 </script>
 <style lang="less" scoped>
 #bus-map {
